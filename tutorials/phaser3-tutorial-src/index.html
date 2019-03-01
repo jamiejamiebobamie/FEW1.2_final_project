@@ -51,6 +51,7 @@ var bomberX = 50;
 var moreDogs = false;
 var interv1;
 var endscreen1
+var showEndScreen = true;
 
 
 var game = new Phaser.Game(config);
@@ -128,7 +129,7 @@ function create ()
     //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
     stars = this.physics.add.group({
         key: 'star',
-        repeat: 11,
+        repeat: 30,
         setXY: { x: 12, y: 0, stepX: 70 }
     });
 
@@ -164,12 +165,16 @@ function create ()
 }
 
 function update (){
-    this.time.addEvent({ delay: 10000, callback: moreDogsPlease(), callbackScope: this, loop: true });
+    this.time.addEvent({ delay: 10000, callback: moreDogsPlease, callbackScope: this, loop: true });
     if (gameOver || score > 500 || player.y> 500)
     {
-        endscreen1 = this.add.image(450, 350, 'endScreen');
+        if (showEndScreen){
+            endscreen1 = this.add.image(450, 350, 'endScreen');
+            showEndScreen = false;
+        }
+
         return;
-    }
+    } else {
 
     if (cursors.left.isDown)
     {
@@ -235,6 +240,7 @@ function update (){
 
         });
     }
+}
 }
 
 function collectStar (player, star)
