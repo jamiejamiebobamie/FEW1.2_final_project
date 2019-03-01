@@ -1,0 +1,38 @@
+<div class="row">
+
+    <div class="col-sm-8 col-sm-offset-2">
+        <ul>
+            {{#each posts}}
+            <li class="list-group-item">
+                <div class="lead">
+             <a href="/posts/{{this._id}}">{{this.title}}</a>
+             </div>
+              <!-- <div class="lead">{{this.title}}</div> -->
+              {{#if this.url}}
+              <a href="{{this.url}}" target="_blank">{{this.url}}<a>
+                  {{/if}}
+
+                <div class="right">
+                  <a href="{{this.author.username}}">{{this.author.username}}</a>
+              <!-- <div><small>{{this.author.username}}</small></div> -->
+              <div class="text-right">
+                <a href="/n/{{post.subreddit}}">{{post.subreddit}}<a>
+              </div>
+
+              <form data-id="{{this._id}}">
+                <button type="submit">Vote Up</button>
+
+              </form>
+
+              <div class="voteScore">{{this.voteScore}}</div>
+
+              <form class="vote-down" data-id="{{this._id}}">
+                <button type="submit">Vote Down</button>
+              </form>
+
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+
+</div>
