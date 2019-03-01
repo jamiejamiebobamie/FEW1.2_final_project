@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>I'm not a hot dog!</title>
+    <title>Not a hot dog!</title>
     <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
     <style type="text/css">
         body {
@@ -59,7 +59,8 @@ function preload ()
 {
     this.load.image('endScreen','assets/notAPenis.png');
     this.load.image('sky', 'assets/INAHoDo_factory_background.png');
-    this.load.image('ground', 'assets/INAHoDo_conveyor_belt.png');
+    // this.load.image('ground', 'assets/INAHoDo_conveyor_belt.png');
+    this.load.spritesheet('ground', 'assets/INAHoDo_conveyor_belt.png', { frameWidth: 400, frameHeight: 193 });
     this.load.image('star', 'assets/INAHoDo_hotdog_whole.png');
     this.load.image('star_part1', 'assets/INAHoDo_hotdog_piece1.png');
     this.load.image('star_part2', 'assets/INAHoDo_hotdog_piece2.png');
@@ -79,7 +80,14 @@ function create ()
     //  Here we create the ground.
     //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
     // platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+
     platforms.create(500, 500, 'ground').setScale(2,.2).refreshBody();
+    this.anims.create({
+        key: 'stand',
+        frames: this.anims.generateFrameNumbers('ground', { start: 0, end: 4 }),
+        frameRate: 10,
+        repeat: 1
+    });
 
     //  Now let's create some ledges
     // platforms.create(600, 400, 'ground');
@@ -156,8 +164,8 @@ function create ()
 }
 
 function update (){
-
-    if (gameOver || score > 500)
+    this.time.addEvent({ delay: 10000, callback: moreDogsPlease(), callbackScope: this, loop: true });
+    if (gameOver || score > 500 || player.y> 500)
     {
         endscreen1 = this.add.image(450, 350, 'endScreen');
         return;
@@ -243,7 +251,7 @@ function collectStar (player, star)
         //  A new batch of stars to collect
         stars.children.iterate(function (child) {
 
-            child.enableBody(true, child.x, 0, true, true);
+            child.enableBody(true, Phaser.Math.Between(200, 700), 0, true, true);
 
         });
 
