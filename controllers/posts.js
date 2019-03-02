@@ -3,20 +3,20 @@ const User = require('../models/user');
 
 module.exports = (app) => {
 
-    // INDEX
-        app.get('/', (req, res) => {
-            var currentUser = req.user;
-            // res.render('home', {});
-            console.log(req.cookies);
-            Post.find().populate('author')
-            .then(posts => {
-                console.log(posts)
-                res.render('posts-index', { posts, currentUser });
-                // res.render('home', {});
-            }).catch(err => {
-                console.log(err.message);
-            })
-        })
+    // // INDEX
+    //     app.get('/', (req, res) => {
+    //         var currentUser = req.user;
+    //         // res.render('home', {});
+    //         console.log(req.cookies);
+    //         Post.find().populate('author')
+    //         .then(posts => {
+    //             console.log(posts)
+    //             res.render('posts-index', { posts, currentUser });
+    //             // res.render('home', {});
+    //         }).catch(err => {
+    //             console.log(err.message);
+    //         })
+    //     })
 
     // GET NEW POST FORM
     app.get('/posts/new', (req, res) => {

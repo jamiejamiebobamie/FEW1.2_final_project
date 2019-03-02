@@ -75,6 +75,75 @@ mongoose.connect('mongodb://localhost/rotten-potatoes');
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
+
+// INDEX
+    app.get('/', (req, res) => {
+            res.render('landing');
+            // res.render('home', {});
+        })
+
+
+// SIGN-UP_GO
+app.get('/sign-up_go', (req, res) => {
+    var currentUser = req.user;
+    if (currentUser) {
+        res.redirect('/');
+    } else {
+        res.render('sign-up_go', currentUser);
+    }
+});
+
+// SIGN-UP_WHO
+app.get('/sign-up_who', (req, res) => {
+    var currentUser = req.user;
+    if (currentUser) {
+        res.redirect('/');
+    } else {
+        res.render('sign-up_who', currentUser);
+    }
+});
+
+// SIGN UP POST
+app.post("/sign-up_who", (req, res) => {
+  // Create User and JWT
+  const user = new User(req.body);
+  console.log(req.body)
+
+  user.save().then((user) => {
+      var token = jwt.sign({ _id: user._id }, process.env.SECRET, { expiresIn: "60 days" });
+      res.cookie('nToken', token, { maxAge: 900000, httpOnly: true });
+      res.redirect('/');
+      })
+    .catch(err => {
+      console.log(err.message);
+      return res.status(400).send({ err: err });
+    });
+
+});
+
+
+// SIGN UP POST
+app.post("/sign-up_go", (req, res) => {
+  // Create User and JWT
+  const user = new User(req.body);
+  console.log(req.body)
+
+  user.save().then((user) => {
+      var token = jwt.sign({ _id: user._id }, process.env.SECRET, { expiresIn: "60 days" });
+      res.cookie('nToken', token, { maxAge: 900000, httpOnly: true });
+      res.redirect('/');
+      })
+    .catch(err => {
+      console.log(err.message);
+      return res.status(400).send({ err: err });
+    });
+
+});
+
+
+
 app.listen(port);
+
+
 
 module.exports = app;
