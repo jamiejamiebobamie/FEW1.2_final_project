@@ -180,10 +180,11 @@ function update (){
         if(player.y> 500){
             if (showEndScreen){
                 endscreen1 = this.add.image(450, 300, 'endScreen2');
+                this.add.text(350, 400, 'YOU escaped!', { fontSize: '32px', fill: '#000' });
+                this.add.text(350, 450, 'You\'re not a hot dog!', { fontSize: '32px', fill: '#000' });
                 showEndScreen = false;
             }
-            this.add.text(350, 400, 'YOU escaped!', { fontSize: '32px', fill: '#000' });
-            this.add.text(350, 450, 'You\'re not a hot dog!', { fontSize: '32px', fill: '#000' });
+
             return;
         }
 
